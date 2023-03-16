@@ -25,16 +25,16 @@ class ListView(QTreeView):
         
         for index,row in df.iterrows():
             if(itemsToShow in df.columns and row[itemsToShow]=='y'):
-                path = row['Path']
+                pathText = row['Path']
                 name = QStandardItem(row['Name'])
                 name.setFlags(name.flags() & ~Qt.ItemIsEditable)
-                name.setData(path)
+                name.setData(pathText)
                 ext = QStandardItem(row['Extension'])
                 ext.setFlags(ext.flags() & ~Qt.ItemIsEditable)
-                ext.setData(path)
-                path = QStandardItem(path)
+                ext.setData(pathText)
+                path = QStandardItem(pathText)
                 path.setFlags(path.flags() & ~Qt.ItemIsEditable)
-                path.setData = path
+                path.setData(pathText)
                 items.append([name, ext, path])
 
         self.__model.clear()
