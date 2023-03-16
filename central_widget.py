@@ -11,7 +11,7 @@ class CentralWidget(QWidget):
         self.__videoplayer = VideoPlayer()
         tree_view = TreeView()
         tree_view.clicked.connect(self.__tree_viewClicked)
-        self.__list_view = ListView()
+        self.__list_view = ListView("./mock_data.xlsx")
         self.__list_view.doubleClicked.connect(self.__list_viewClicked)
         vbox = QVBoxLayout()
         vbox.addWidget(self.__list_view, stretch=1)
