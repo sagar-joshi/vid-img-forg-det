@@ -9,8 +9,7 @@ class ListView(QTreeView):
 
         self.__path = path
         self.__model = QStandardItemModel()
-        self.__model.setColumnCount(2)
-        self.__model.setHorizontalHeaderLabels(["Name", "Type"])
+        
         
         self.updateModel('')
 
@@ -24,5 +23,9 @@ class ListView(QTreeView):
             if(itemsToShow in df.columns and row[itemsToShow]=='y'):
                 items.append([QStandardItem(row['Name']), QStandardItem(row['Extension'])])
 
+        self.__model.clear()
+        self.__model.setColumnCount(2)
+        self.__model.setHorizontalHeaderLabels(["Name", "Type"])
+        
         for item in items:
             self.__model.appendRow(item)
