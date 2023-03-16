@@ -10,10 +10,10 @@ class CentralWidget(QWidget):
         self.__videoplayer = VideoPlayer()
         self.__treeview = TreeView()
         self.__treeview.clicked.connect(self.__tree_viewClicked)
-        self.__list_view = ListView("./mock_data.xlsx")
-        self.__list_view.doubleClicked.connect(self.__list_viewClicked)
+        self.__listview = ListView("./mock_data.xlsx")
+        self.__listview.doubleClicked.connect(self.__listviewClicked)
         vbox = QVBoxLayout()
-        vbox.addWidget(self.__list_view, stretch=1)
+        vbox.addWidget(self.__listview, stretch=1)
         vbox.addWidget(self.__videoplayer, stretch=2)
         widget = QWidget()
         widget.setLayout(vbox)
@@ -26,8 +26,10 @@ class CentralWidget(QWidget):
         model = self.__treeview.getModel()
         item = model.itemFromIndex(index)
         itemText = item.text()
-        self.__list_view.updateModel(itemText)
+        self.__listview.updateModel(itemText)
 
-    def __list_viewClicked(self, index):
-        self.__videoplayer.updateMedia(QFileSystemModel().filePath(index))
+    def __listviewClicked(self, index):
+        model = self.__listview.getModel()
+        item = model.itemFromIndex(index)
+        self.__videoplayer.updateMedia(item.data())
              
