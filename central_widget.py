@@ -26,7 +26,7 @@ class CentralWidget(QWidget):
         model = self.__treeview.getModel()
         item = model.itemFromIndex(index)
         itemText = item.text()
-        self.__list_view.setItemsToShow(itemText)
+        self.__list_view.updateModel(itemText)
 
     def __list_viewClicked(self, index):
         self.__videoplayer.updateMedia(QFileSystemModel().filePath(index))
