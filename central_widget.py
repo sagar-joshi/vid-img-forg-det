@@ -8,8 +8,8 @@ class CentralWidget(QWidget):
         super().__init__()
 
         self.__videoplayer = VideoPlayer()
-        tree_view = TreeView()
-        tree_view.clicked.connect(self.__tree_viewClicked)
+        self.__treeview = TreeView()
+        self.__treeview.clicked.connect(self.__tree_viewClicked)
         self.__list_view = ListView()
         self.__list_view.doubleClicked.connect(self.__list_viewClicked)
         vbox = QVBoxLayout()
@@ -18,12 +18,15 @@ class CentralWidget(QWidget):
         widget = QWidget()
         widget.setLayout(vbox)
         hbox = QHBoxLayout()
-        hbox.addWidget(tree_view, stretch=1)
+        hbox.addWidget(self.__treeview, stretch=1)
         hbox.addWidget(widget, stretch=3)
         self.setLayout(hbox)
 
     def __tree_viewClicked(self, index):
-        pass
+        model = self.__treeview.getModel()
+        item = model.itemFromIndex(index)
+        itemText = item.text()
+        self.__list_view.setItemsToShow(itemText)
 
     def __list_viewClicked(self, index):
         self.__videoplayer.updateMedia(QFileSystemModel().filePath(index))

@@ -5,8 +5,8 @@ class TreeView(QTreeView):
     def __init__(self):
         super().__init__()
 
-        self.model = QStandardItemModel()
-        self.model.setHorizontalHeaderItem(0, QStandardItem(""))
+        self.__model = QStandardItemModel()
+        self.__model.setHorizontalHeaderLabels(["Name"])
 
         imgForensics = QStandardItem("Image Forensics")
         imgForensics.setEditable(False)
@@ -25,8 +25,8 @@ class TreeView(QTreeView):
         deletion = QStandardItem("Deletion Forgery")
         deletion.setEditable(False)
         
-        self.model.appendRow(imgForensics)
-        self.model.appendRow(vidForensics)
+        self.__model.appendRow(imgForensics)
+        self.__model.appendRow(vidForensics)
 
         imgForensics.appendRow(normal)
         imgForensics.appendRow(deepFake)
@@ -36,7 +36,10 @@ class TreeView(QTreeView):
         normal.appendRow(copyMove)
         normal.appendRow(splicing)
 
-        self.setModel(self.model)
+        self.setModel(self.__model)
+
+    def getModel(self):
+        return self.__model
 
 
     
