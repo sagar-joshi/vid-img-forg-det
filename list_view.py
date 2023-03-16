@@ -1,17 +1,28 @@
-from PyQt5.QtWidgets import QListView, QFileSystemModel
-from PyQt5.QtCore import QSize
+from PyQt5.QtWidgets import QTreeView
+from PyQt5.QtGui import QStandardItemModel, QStandardItem
+import pandas as pd
 
-class ListView(QListView):
-    def __init__(self):
+
+class ListView(QTreeView):
+    def __init__(self, path):
         super().__init__()
-        self.__model = QFileSystemModel()
-        self.__model.setRootPath("")
-        self.setModel(self.__model)
-        self.setRootIndex(self.__model.index(""))
-        self.setViewMode(QListView.IconMode)
-        self.setIconSize(QSize(60, 60))
-        self.setUniformItemSizes(True)
-    
-    def updateRootIndex(self, path):
-        self.setRootIndex(self.__model.index(path))
+
+        self.__path = path
+        self.__model = QStandardItemModel()
+        self.__model.setColumnCount(2)
+        self.__model.setHorizontalHeaderLabels(["Name", "Type"])
         
+        self.updateModel('')
+
+        self.setModel(self.__model)
+
+    def updateModel(self, itemsToShow):
+        df = pd.read_excel(self.__path)
+        items = []
+        
+        for index,row in df.iterrows():
+            if(itemsToShow in df.columns and row[itemsToShow]=='y'):
+                items.append([QStandardItem(row['Name']), QStandardItem(row['Extension'])])
+
+        for item in items:
+            self.__model.appendRow(item)
