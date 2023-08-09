@@ -24,22 +24,22 @@ class ListView(QTreeView):
         items = []
         
         for index,row in df.iterrows():
-            if(itemsToShow in df.columns and row[itemsToShow]=='y'):
+            if(itemsToShow in df.columns and row[itemsToShow]==1):
                 pathText = row['Path']
-                name = QStandardItem(row['Name'])
-                name.setFlags(name.flags() & ~Qt.ItemIsEditable)
-                name.setData(pathText)
-                ext = QStandardItem(row['Extension'])
-                ext.setFlags(ext.flags() & ~Qt.ItemIsEditable)
-                ext.setData(pathText)
+                # name = QStandardItem(row['Name'])
+                # name.setFlags(name.flags() & ~Qt.ItemIsEditable)
+                # name.setData(pathText)
+                # ext = QStandardItem(row['Extension'])
+                # ext.setFlags(ext.flags() & ~Qt.ItemIsEditable)
+                # ext.setData(pathText)
                 path = QStandardItem(pathText)
                 path.setFlags(path.flags() & ~Qt.ItemIsEditable)
                 path.setData(pathText)
-                items.append([name, ext, path])
+                items.append([path])
 
         self.__model.clear()
-        self.__model.setColumnCount(3)
-        self.__model.setHorizontalHeaderLabels(["Name", "Type", "Path"])
+        self.__model.setColumnCount(1)
+        self.__model.setHorizontalHeaderLabels(["Path"])
 
         for item in items:
             self.__model.appendRow(item)
