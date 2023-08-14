@@ -54,6 +54,10 @@ class VideoPlayer(QWidget):
     def __durationChanged(self, duration):
         self.__positionSlider.setRange(0, duration)
 
+    def __free_media(self):
+        self.__mediaPlayer.setMedia(QMediaContent())  
+
     def updateMedia(self, path):
+        self.__free_media()
         self.__mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(path)))
         self.__mediaPlayer.play()
