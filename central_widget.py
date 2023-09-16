@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QFileSystemModel
 from media_player import VideoPlayer
 from tree_view import TreeView
 from list_view import ListView
+from vid_forg_localiz import get_localized_video
 
 class CentralWidget(QWidget):
     def __init__(self):
@@ -30,6 +31,14 @@ class CentralWidget(QWidget):
 
     def __listviewClicked(self, index):
         model = self.__listview.getModel()
-        item = model.itemFromIndex(index)
-        self.__videoplayer.updateMedia(item.data())
+        row = index.row()
+        rowItems=[]
+        for col in range(model.columnCount()):
+            rowItems.append(model.item(row, col))
+        # item = model.itemFromIndex(index)
+        # print(item.data())
+        videoPath = rowItems[0].data()
+        forgType = rowItems[1].data()
+        videoPath = get_localized_video(videoPath, forgType)
+        self.__videoplayer.updateMedia(videoPath)
              
