@@ -9,6 +9,7 @@ class CentralWidget(QWidget):
         super().__init__()
 
         self.__videoplayer = VideoPlayer()
+        self.__videoplayer2 = VideoPlayer()
         self.__treeview = TreeView()
         self.__treeview.clicked.connect(self.__tree_viewClicked)
         self.__listview = ListView("./mock_data.xlsx")
@@ -18,9 +19,14 @@ class CentralWidget(QWidget):
         hbox.addWidget(self.__listview, stretch=3)
         widget = QWidget()
         widget.setLayout(hbox)
+        hbox = QHBoxLayout()
+        hbox.addWidget(self.__videoplayer, stretch=1)
+        hbox.addWidget(self.__videoplayer2, stretch=1)
+        widget2 = QWidget()
+        widget2.setLayout(hbox)
         vbox = QVBoxLayout()
         vbox.addWidget(widget, stretch=2)
-        vbox.addWidget(self.__videoplayer, stretch=3)
+        vbox.addWidget(widget2, stretch=3)
         self.setLayout(vbox)
 
     def __tree_viewClicked(self, index):
@@ -39,6 +45,7 @@ class CentralWidget(QWidget):
         # print(item.data())
         videoPath = rowItems[0].data()
         forgType = rowItems[1].data()
-        videoPath = get_localized_video(videoPath, forgType)
+        localizedVideoPath = get_localized_video(videoPath, forgType)
         self.__videoplayer.updateMedia(videoPath)
+        self.__videoplayer2.updateMedia(localizedVideoPath)
              
