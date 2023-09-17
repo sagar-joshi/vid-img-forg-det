@@ -28,13 +28,11 @@ class TreeView(QTreeView):
         self.__model.appendRow(imgForensics)
         self.__model.appendRow(vidForensics)
 
-        imgForensics.appendRow(normal)
-        imgForensics.appendRow(deepFake)
+        imgForensics.appendRow(copyMove)
+        imgForensics.appendRow(splicing)
         vidForensics.appendRow(insertion)
         vidForensics.appendRow(deletion)
 
-        normal.appendRow(copyMove)
-        normal.appendRow(splicing)
 
         self.setModel(self.__model)
 

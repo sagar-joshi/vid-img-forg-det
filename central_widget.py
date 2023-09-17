@@ -3,6 +3,7 @@ from media_player import VideoPlayer
 from tree_view import TreeView
 from list_view import ListView
 from vid_forg_localiz import get_localized_video
+from img_forg_localize import getLocalizedImg
 
 class CentralWidget(QWidget):
     def __init__(self):
@@ -43,9 +44,13 @@ class CentralWidget(QWidget):
             rowItems.append(model.item(row, col))
         # item = model.itemFromIndex(index)
         # print(item.data())
-        videoPath = rowItems[0].data()
+        path = rowItems[0].data()
         forgType = rowItems[1].data()
-        localizedVideoPath = get_localized_video(videoPath, forgType)
-        self.__videoplayer.updateMedia(videoPath)
-        self.__videoplayer2.updateMedia(localizedVideoPath)
+        localizedPath = ''
+        if(forgType == 'Insertion' or forgType == 'Deletion'):
+            localizedPath = get_localized_video(path, forgType)
+        if(forgType == 'copymove' or forgType == 'splicing'):
+            localizedPath = getLocalizedImg(path)
+        self.__videoplayer.updateMedia(path)
+        self.__videoplayer2.updateMedia(localizedPath)
              

@@ -26,7 +26,15 @@ class ListView(QTreeView):
         for index,row in df.iterrows():
             if(itemsToShow in df.columns and row[itemsToShow]==1):
                 pathText = row['Path']
-                forgTypeText = 'Insertion' if row['Insertion Forgery']==1 else 'Deletion'
+                forgTypeText = ''
+                if row['Insertion Forgery']==1:
+                    forgTypeText = 'Insertion'
+                if row['Deletion Forgery']==1:
+                    forgTypeText = 'Deletion'
+                if row['Copy Move']==1:
+                    forgTypeText = 'copymove'
+                if row['Splicing']==1:
+                    forgTypeText = 'splicing'
                 forgType = QStandardItem(forgTypeText)
                 forgType.setFlags(forgType.flags() & ~Qt.ItemIsEditable)
                 forgType.setData(forgTypeText)
