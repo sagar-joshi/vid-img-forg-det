@@ -5,10 +5,13 @@ import os
 
 def getLocalizedImg(path):
     output_path = './tinted_img.png'
-    os.remove(output_path)
+    if (os.path.exists(output_path)):
+        os.remove(output_path)
     img = cv2.imread(path)
-    model = load_model('./img-forg-loc_copy_move_e200.keras')
-    pred = model.predict(np.expand_dims(img, axis=0))
+    img = np.array(img)
+    norm_img = img / 255
+    model = load_model('./img-forg-loc_e200.keras')
+    pred = model.predict(np.expand_dims(norm_img, axis=0))
     threshold = pred[0].min() + ((pred[0].max() - pred[0].min())/2)
     pred = (pred > threshold) * 255
     for i in range(len(pred[0])):
